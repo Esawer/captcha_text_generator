@@ -14,6 +14,12 @@ Generowanie ciągów znaków, jak i obrazów z tekstem CAPTCHA bazujących na ty
 ![Pillow](https://img.shields.io/badge/Pillow-Library-green?style=for-the-badge)  
 ![SHA-512](https://img.shields.io/badge/Security-SHA--512-red?style=for-the-badge)
 
+### 🤖 Użycie AI
+Podczas tworzenia projektu używałem sztucznej inteligencji (Gemini).  
+W dużym stopniu pomogła mi przy pracy z biblioteką Pillow, modułem hashlib, jak i frameworkiem Flask.  
+Wygenerowała skrypty HTML i CSS.  
+AI zostało także użyte przy samym [badaniu modeli](./captcha_teoria.pdf).
+
 ### ⚙️ Działanie i funkcje
 1. Po uruchomieniu programu, generowane są alfanumeryczne ciągi znaków - od 5 do 8 znaków - które muszą spełniać kryterium czytelności.
 2. Za pomocą biblioteki ***Pillow*** (PIL) tworzone są obrazy z tymi właśnie ciągami znaków.
@@ -70,6 +76,11 @@ Generating strings that are later used to create CAPTCHA images; the strings the
 ![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
 ![Pillow](https://img.shields.io/badge/Pillow-Library-green?style=for-the-badge)  
 ![SHA-512](https://img.shields.io/badge/Security-SHA--512-red?style=for-the-badge)
+
+### 🤖 AI Usage
+I used AI (Gemini) during the creation of this project.  
+It greatly helped me with the Pillow library, hashlib module, and Flask framework.  
+It also generated HTML and CSS scripts.
 
 ### ⚙️ Functions
 1. First, random alphanumeric strings - from 5 to 8 characters - are generated, meeting readability standards.
