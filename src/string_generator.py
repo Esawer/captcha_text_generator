@@ -1,80 +1,67 @@
 import os
 import random
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # zmienna ścieżki do pliku, stworzona za pomocą modułu os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 def generate_strings(IMG_NUMBER: int):
     """
-    Funkcja generuje ciągi znaków, które zostają zapisane w zmiennej słownika - str_combinations.
-    Same ciągi wykluczją znaki, które mogą być mylące dla użytkownika - np. - _ 1 ~ I l ) (.
-    Sam znak jest wpierw losowany - z danej puli znaków - następnie jeśli znak jest porządany, ten zostaje dodany do danego ciągu znaków,
-    w przypadku znaku nieporządanego losowanie jest kontynuowane.
-    Sam ciąg znaków może mieć od 5 od 8 znaków - liczba jest losowana.
+    Generates random strings and saves them to the `str_combinations` dictionary.
+    The function filters out characters that are hard for humans to read or easily confused (e.g., -, _, 1, ~, I, l, ), ().
+    If a chosen character is easy to read and not already in the string, it is added; otherwise, the process repeats.
+    Each string is composed of 5 to 8 characters.
 
-    Na koniec funkcji dane zmiennej słownika zostają podane jako argument w innej fukcji - strings_to_file.
-
-    :param IMG_NUMBER: liczba ciągów znaków jaką skrypt ma wygenerować
+    :param IMG_NUMBER: The total number of strings to generate.
 
     ##############################
-    W samej funkcji nie wykorzystywałem zbytnio AI, jedynie do modułu random - składnia - ten sam efekt osiągnołbym
-    czytając dokumentację, lecz jest to bardziej wymagające a efekt jest taki sam.
-    Prócz tego możliwe pytania - np. jak 'zrobić' char - używamy chr().
+    I used AI for the random module, as well as for general syntax.
     ##############################
     """
 
-    str_combinations = dict()  # zmienna słownika
+    str_combinations = dict()
 
     for i in range(IMG_NUMBER):
-        n = random.randrange(5, 9)  # losowanie długości ciągu
-        comb = ""  # pojedyncza tymczasowa kombinacja
+        n = random.randrange(5, 9)  # Randomized string length.
+        comb = ""  # Temporary string placeholder.
 
         for _ in range(n):
             while True:
                 character = random.randint(35,
-                                           123)  # przedział ogólny znaków, następnie ograniczony poprzez kolejny filtr - możnaby użyć regex, jednak go nie znam.
+                                           123)  # If the chosen character is not in the excluded list and not already in the string, it is added.
                 if (chr(character) not in
                         ("-", "_", "1", "~", "`", "!", "I", "l",
                          "0", "O", '"', "'", "}", "{", "(", ")",
                          ";", ":", "/", "\\", ",", ".", "[", "]", "i", 't', "&", "=", "+", ">", "<", "j", 'o') and chr(
                             character) not in comb):
-                    comb += chr(character)  # dodanie znaku do tymczasowej zmiennej kombinacji
+                    comb += chr(character)
                     break
 
-        str_combinations[str(i)] = comb  # dodanie zmiennej kombinacji do str_combinations
+        str_combinations[str(i)] = comb  # The generated string is added to the dictionary.
 
-    strings_to_file(str_combinations)  # funkcja strings_to_file z argumentem zmiennej słownika
+    strings_to_file(str_combinations)  # Calls the strings_to_file function with the dictionary as the argument.
 
 
 def strings_to_file(str_combinations: dict):
     """
-    Funkcja otwiera lub tworzy plik tekstowy captcah_codes.txt, w którym zapisywane są ciągi znaków w następującej formie:
+    Opens the captcha_codes.txt file and saves the strings in the following format:
     0;abcde
     1;fghijkm
     2;tfsbrh
 
-    :param str_combinations: zmienna słownikowa zawierająca kombinacje znaków wybranych w funkcji - generate_strings()
+    :param str_combinations: A dictionary of strings created by generate_strings().
 
     ##############################
-    W samej funkcji nie wykorzystywałem zbytnio AI, jedynie do modułu os - dawno go nie używałem.
-    Prócz tego może debugowanie ścieżek i dodatkowe pytania.
+    I used AI to help me with the os module, as well as for syntax.
     ##############################
     """
     global BASE_DIR
-    file_location = BASE_DIR  # pochodna od BASE_DIR użyta do ścieżki pliku.
+    file_location = BASE_DIR
 
-    try:  # samo zachowanie zapisywania plików powinno być zmienione, w przypadku braku folderu, lub zmiany układu projektu program nie będzie działał.
+    try:
         file_location += "\\web_page\\static\\captcha_codes.txt"
     except FileNotFoundError or PermissionError:
         file_location = BASE_DIR + "\\web_page\\captcha_codes.txt"
 
-    with open(f"{file_location}", 'w') as f:  # otworzenie pliku i zapisanie ciągów znaków: index;ciąg_znaku
+    with open(f"{file_location}", 'w') as f:  # Opens the file and saves the strings in the format: index;string
         for i, j in enumerate(str_combinations.values()):
             f.write(f"{i};{j}\n")
-
-
-"""
-Projekt: Kody Autoryzacyjne CAPTCHA
-Autor: Igor Wróblewski - 177918
-Kierunek: Informatyka stosowana 2 rok - stacjonarnie
-"""

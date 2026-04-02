@@ -6,58 +6,54 @@ from random import randint
 from PIL import Image, ImageDraw, ImageFont, ImageChops, \
     ImageFilter  # importy z biblioteki PIL, która odpowiada za tworzenie obrazów
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # zmienna ścieżki do pliku, stworzona za pomocą modułu os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 def encrypt_codes(str_combinations: dict):
     """
-    Funkcja odpowiada za haszowanie ciągów znaków - przy pomocy biblioteki hashlib - wykorzystujemy sha512.
-    Każdy ciąg znaku jest hashowany - po dodatkowym 'wyczyszczeniu' z niewidzialnych znaków i spacji (dla bezpieczeństwa).
-    Po powyższym hashe i ich indexy zostają zapisane w pliku - captcha_codes.txt.
+    This function hashes strings using hashlib and the SHA-512 algorithm.
+    Additionally, every string is stripped of newline characters and spaces.
+    Finally, the hashes are saved to a text file.
 
-    :param str_combinations: zmienna słownikowa, przechowująca ciągi znaków i indeksów: index;ciąg_znaków
+    :param str_combinations: A dictionary containing plaintext strings.
 
     ##############################
-    W tej funkcji AI w większości pisało kod - jeśli chodzi o samą bibliotekę hashlib.
-    Nigdy chyba nie używałem hashowania w języku Python - raz w Javie - nie znałem składni ani jak używać hashlib.
+    I used AI to help me with hashlib.
     ##############################
     """
     global BASE_DIR
     file_location = BASE_DIR
 
-    try:  # edycja ścieżki file_location
+    try:
         file_location += "\\web_page\\static"
     except FileNotFoundError or PermissionError:
         file_location += "\\web_page"
 
     for i, j in enumerate(
-            str_combinations.values()):  # proces hashowania w pętli, ciąg znaków jest 'czyszczony' i hashowany w sha512.
+            str_combinations.values()):
         str_combinations[f"{i}"] = hashlib.sha512(j.strip('\n').strip(" ").encode()).hexdigest()
 
-    with open(f"{file_location}\\captcha_codes.txt", 'w') as f:  # zapis hashów do pliku captcha_codes.txt.
+    with open(f"{file_location}\\captcha_codes.txt", 'w') as f:
         for i, j in enumerate(str_combinations.values()):
             f.write(f"{i};{j}\n")
 
 
 def create_images(IMG_NUMBER: int):
     """
-    Funkcja wpierw przygotowuje ścieżki - plików i obrazów.
-    Następnie dochodzi do oczyszczenia indeksów i pozostawieniu tylko ciągi znaków - surowe - same indeksy są zapewnione
-    poprzez zmienną słownika.
-    Po przejściu do głownej pętli, gdzie rodzaj obraz wraz z zniekształceniami jest generowany, a następnie zapisywany w folderze.
+    First, strings are stripped of their indices, leaving bare strings
+    that are then used for image generation.
+    Afterwards, the images are generated using Pillow (PIL).
 
-    :param IMG_NUMBER:  ilość obrazów jaka ma być wygenerowana - jest taka sama jak ilość ciągów znaków.
+    :param IMG_NUMBER: The number of images to generate.
     ##############################
-    W tej funkcji używałem dużo AI, zawsze do biblioteki PIL, nigdy w niej nie pisałem a dokumentacja jest trudna i ubłoga.
-    Nie było w niej informacji jak np. narysować linę - AI to wiedziało.
-    Samo ustawienie efektów (ich mocy) jest moje, lecz ich implementacja (jak je napisać) zostały zrobione przez AI.
+    I used AI for the Pillow library work (as I had never used it before).
     ##############################
     """
-    global BASE_DIR  # zmienna ścieżki do pliku, stworzona za pomocą modułu os
+    global BASE_DIR
     file_location = os.path.dirname(BASE_DIR)
     img_location = os.path.dirname(BASE_DIR)
 
-    try:  # ścieżki do pliku z ciągami znaków i do obrazów.
+    try:
         file_location += "\\src\\web_page\\static\\captcha_codes.txt"
         img_location += "\\src\\web_page\\static\\captcha_images"
 
@@ -65,61 +61,54 @@ def create_images(IMG_NUMBER: int):
         file_location += "\\web_page\\static\\captcha_codes.txt"
         img_location += "\\web_page\\static\\data\\captcha_images"
 
-    str_combinations = dict()  # zmienna słownikowa
-    reverse_colors = False  # zmienna bool (ture/false), która decyduej o kolorze - białym lub czarnym - tekstu i obrazu (jeśli tekst jest biały to obraz jest czarny i vice versa)
-    color = ['white', 'black']  # tablica 2 elementowa - kolor biały i czarny
+    str_combinations = dict()
+    reverse_colors = False  # Boolean; determines the color of both the text and the background.
+    color = ['white', 'black']  # Colors of text and background.
 
-    with open(file_location, 'r') as f:  # zmienna słownikowa, wypełnienie
+    with open(file_location, 'r') as f:
         for i in range(IMG_NUMBER):
             line = f.readline().strip("\n").split(";")
             str_combinations[line[0]] = line[1]
 
     for i in range(IMG_NUMBER):
-        reverse_colors = bool(random.randint(0, 2))  # kolor zostaje wybrany losowo z puli color.
+        reverse_colors = bool(random.randint(0, 2))
         color = sorted(color, reverse=reverse_colors)
 
-        code = list(str_combinations[f"{i}"])  # ciąg znaków wyodrębiony i dany jako string
+        code = list(str_combinations[f"{i}"])
         text = "".join((code[i] + (random.randint(0, 3) * " ")) for i in range(len(code)))
-        # generacja tekstu, pomiędzy znakami jest dodawana losowa ilość spacji 0-3.
+        # Text generation with a random number of spaces between characters.
 
-        im_width = 350  # szerokość obrazka
-        im_height = 75  # wysokość obrazkia
+        im_width = 350  # Image width.
+        im_height = 75  # Image height.
         img = Image.new("L", (im_width, im_height),
-                        color[0])  # zmienna obrazka, w danym kolorze, wymiarach i masce (typ L do skali szarości)
+                        color[
+                            0])  # Image object of the corresponding size, color, and mode ('L' mode is monochrome).
         draw = ImageDraw.Draw(img)
 
-        current_x = 10  # pozycja startu 1 znaku
+        current_x = 10  # First character starting position.
         for j in range(len(text)):
             ft = ImageFont.truetype(["arialbd.ttf", "arialbi.ttf"][(random.randint(0, 1))], random.randint(35, 40))
-            # czcionka znaku jest wybierana losowo z chionki arial bold i arial boli italic - wielkość czcionki też jest losowana.
+            # Font type and size are randomized.
             draw.text((current_x, random.randint(5, 18)), text[j], fill=color[1], font=ft)
-            # znak jest rysowany, pozycja current_x, pozycja y losowana, kolor (odwrotny niż obrazek) i czcionka.
+            # The character is drawn with a randomized Y position.
             current_x += draw.textlength(text[j], ft)
-            # zmienna current_x jest zwiększana o wielkość znaku i właściwej mu czcionki
 
         for _ in range(random.randint(3,
-                                      7)):  # obraz generuje losową liczbę linii z zakresu, linie te przecinają już wygenerowane znaki.
+                                      7)):  # A random number of lines is generated.
             draw.line((random.uniform(0, im_width), random.uniform(0, im_height), random.uniform(0, im_width),
                        random.uniform(0, im_height)), fill=color[1], width=random.randrange(3, 5))
-            # start i koniec linii jest losowany, podobnie szerokość linii - kolor jest taki sam jak tekst
+            # The start and end points of the line are randomized.
 
         for _ in range(randint(5000,
-                               7000)):  # kulki 'pointy' zniekształcają dodatkowo obraz - losowa ilość, położenie - kolor tekstu
+                               7000)):  # Points / grain effect.
             draw.point(((random.randint(0, im_width)), (random.randint(0, im_height))), fill=color[1])
 
-        noise = Image.effect_noise((350, 75), random.randrange(30, 45))  # dodatkowy efekt szumu, losowa moc
+        noise = Image.effect_noise((350, 75), random.randrange(30, 45))  # Noise effect with randomized strength.
 
-        img = ImageChops.add(img, noise)  # połączenie efektu szumu z obrazem
-        img = img.filter(ImageFilter.GaussianBlur(radius=random.uniform(1, 1.5)))  # dodanie filtru rozmycia gaussa.
+        img = ImageChops.add(img, noise)  # The noise effect is added.
+        img = img.filter(ImageFilter.GaussianBlur(radius=random.uniform(1, 1.5)))  # Gaussian blur.
         img.save(f"{img_location}\\img_{i}.jpg", format="JPEG",
-                 optimized=True)  # stworzenie samego obrazu w folderze z właściwą sobie nazwą.
+                 optimized=True)  # The image is saved.
 
     encrypt_codes(
-        str_combinations)  # wywołanie funkcji hashowania obrazów z parametrem, już oczyszczonych z indeksów ciągów znaków.
-
-
-"""
-Projekt: Kody Autoryzacyjne CAPTCHA
-Autor: Igor Wróblewski - 177918
-Kierunek: Informatyka stosowana 2 rok - stacjonarnie
-"""
+        str_combinations)  # Calls the encryption function with string combinations as the argument.
