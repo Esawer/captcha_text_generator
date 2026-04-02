@@ -59,7 +59,7 @@ def strings_to_file(str_combinations: dict):
 
     try:
         file_location += "\\web_page\\static\\captcha_codes.txt"
-    except FileNotFoundError or PermissionError:
+    except (FileNotFoundError, PermissionError):
         file_location = BASE_DIR + "\\web_page\\captcha_codes.txt"
 
     with open(f"{file_location}", 'w') as f:  # Opens the file and saves the strings in the format: index;string
