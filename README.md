@@ -25,6 +25,10 @@ Generowanie ciągów znaków, jak i obrazów z tekstem CAPTCHA bazujących na ty
 3. Gdy obrazy są już wygenerowane, same ciągi znaków są haszowane - SHA-512.
 4. Podczas logowania (Flask), użytkownik musi podać poprawną odpowiedź na kod CAPTCHA, jego odpowiedź jest haszowana i jest ona porównywana z zahaszowanym ciągiem znaków.  
 
+**Działanie Programu:** <p align="center">
+![Animation1](https://github.com/user-attachments/assets/8a56ad7e-96c9-455c-ab88-1740a785b613)
+</p>
+
 **Przykłady wygenerowanych obrazów:** <p align="center">
   <img src="https://github.com/user-attachments/assets/8c310d44-1c17-4b6f-8675-fcc9307875be" alt="img_24">
   <img src="https://github.com/user-attachments/assets/a45c6955-0b5d-42ef-a9fe-24fd6096b366" alt="img_31">
@@ -74,6 +78,10 @@ Generating strings that are later used to create CAPTCHA images; the strings the
    * Additional effects such as Gaussian blur, pointers/grain, and noise.
 3. When the images themselves are ready, the original codes are hashed using SHA-512.
 4. When a user wishes to log in, they have to type the correct CAPTCHA verification code - after the program hashes their input, it is compared with the original hashed code. 
+
+**Program in Action:** <p align="center">
+![Animation1](https://github.com/user-attachments/assets/8a56ad7e-96c9-455c-ab88-1740a785b613)
+</p>
 
 **Examples of generated images:** <p align="center">
   <img src="https://github.com/user-attachments/assets/8c310d44-1c17-4b6f-8675-fcc9307875be" alt="img_24">
