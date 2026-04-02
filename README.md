@@ -43,18 +43,21 @@ Sam projekt został wykorzystany przy stworzeniu 26-stronicowej pracy pisemnej n
 
 ### 🏭 Struktura Projektu
 ```text
-src/    
-├── web_page/  
-│   ├── static/    
-│   │   ├── captcha_images/    # Wygenerowane obrazy CAPTCHA  
-│   │   ├── captcha_codes.txt  # Zahaszowane (SHA-512) kody weryfikacji  
-│   │   └── style.css          # Arkusze stylów  
-│   ├── templates/  
-│   │   ├── index.html         # Strona logowania  
-│   │   └── user_page.html     # Strona docelowa (po sukcesie)  
-│   └── main.py                # Kontroler routingu Flask  
-├── image_generator.py         # Skrypt renderujący zniekształcenia (Pillow)  
-└── string_generator.py        # Logika losowania ciągów znaków
+📦 Katalog główny projektu
+├── src/    
+│   ├── web_page/  
+│   │   ├── static/    
+│   │   │   ├── captcha_images/    # Wygenerowane obrazy CAPTCHA  
+│   │   │   ├── captcha_codes.txt  # Zahaszowane (SHA-512) kody weryfikacji  
+│   │   │   └── style.css          # Arkusze stylów  
+│   │   ├── templates/  
+│   │   │   ├── index.html         # Strona logowania  
+│   │   │   └── user_page.html     # Strona użytkownika 
+│   │   └── main.py                # Punkt startowy programu 
+│   ├── image_generator.py         # Skrypt renderujący obrazy (Pillow)  
+│   └── string_generator.py        # Logika losowania ciągów znaków
+├── requirements.txt               # Zależności projektu
+└── README.md                      # O projekcie
 ```
 
 ---
@@ -90,16 +93,19 @@ Generating strings that are later used to create CAPTCHA images; the strings the
 
 ### 🏭 Project structure
 ```text
-src/    
-├── web_page/  
-│   ├── static/    
-│   │   ├── captcha_images/    # Generated CAPTCHA images  
-│   │   ├── captcha_codes.txt  # Hashed verification codes (SHA-512)  
-│   │   └── style.css          # CSS file
-│   ├── templates/  
-│   │   ├── index.html         # Login page
-│   │   └── user_page.html     # Sample user page
-│   └── main.py                # Starting point of the program
-├── image_generator.py         # Image generator script (Pillow)  
-└── string_generator.py        # Random string generator script
+📦 Project Main Directory
+├── src/    
+│   ├── web_page/  
+│   │   ├── static/    
+│   │   │   ├── captcha_images/    # Generated CAPTCHA images  
+│   │   │   ├── captcha_codes.txt  # Hashed verification codes (SHA-512)  
+│   │   │   └── style.css          # CSS file 
+│   │   ├── templates/  
+│   │   │   ├── index.html         # Login page  
+│   │   │   └── user_page.html     # Sample user page
+│   │   └── main.py                # Starting point of the program
+│   ├── image_generator.py         # Image generator script (Pillow)  
+│   └── string_generator.py        # Random string generator script
+├── requirements.txt               # Project requirements
+└── README.md                      # About the project
 ```
