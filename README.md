@@ -1,10 +1,10 @@
 # Captcha Text Generator
 
-[![Polish](https://img.shields.io/badge/Język-Polski-red)](#-wersja-polska)
-[![English](https://img.shields.io/badge/Language-English-blue)](#-english-version)
+[![Polish](https://img.shields.io/badge/Język-Polski-red)](#pl)
+[![English](https://img.shields.io/badge/Language-English-blue)](#en)
 
 ---
-
+<a id="pl"></a>
 ## 🔴 Wersja Polska 🔴
 Projekt semestralny na kurs **"Bezpieczeństwo systemów informatycznych"** dotyczący kodów weryfikacji CAPTCHA.  
 Generowanie ciągów znaków, jak i obrazów z tekstem CAPTCHA bazujących na tych ciągach, które następnie są haszowane.
@@ -54,7 +54,7 @@ src/
 ```
 
 ---
-
+<a id="en"></a>
 ## 🔵 English Version 🔵
 Semester project for the **"Security of IT Systems"** course, regarding CAPTCHA verification codes.  
 Generating strings that are later used to create CAPTCHA images; the strings themselves are then hashed.
