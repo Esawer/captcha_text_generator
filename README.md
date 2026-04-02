@@ -63,6 +63,7 @@ Sam projekt został wykorzystany przy stworzeniu 26-stronicowej pracy pisemnej n
 │   ├── image_generator.py         # Skrypt renderujący obrazy (Pillow)  
 │   └── string_generator.py        # Logika losowania ciągów znaków
 ├── requirements.txt               # Zależności projektu
+├── LICENSE                        # GNU GENERAL PUBLIC LICENSE Wersja 3
 └── README.md                      # O projekcie
 ```
 
@@ -118,5 +119,6 @@ It also generated HTML and CSS scripts.
 │   ├── image_generator.py         # Image generator script (Pillow)  
 │   └── string_generator.py        # Random string generator script
 ├── requirements.txt               # Project requirements
+├── LICENSE                        # GNU GENERAL PUBLIC LICENSE Version 3
 └── README.md                      # About the project
 ```
